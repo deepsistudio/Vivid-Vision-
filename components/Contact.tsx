@@ -11,37 +11,55 @@ const Contact: React.FC<ContactProps> = ({ t }) => {
   const [isSent, setIsSent] = useState(false);
 
   useEffect(() => {
-    const saved = localStorage.getItem('vv_contact_data');
-    if (saved) setFormData(JSON.parse(saved));
+    try {
+      const saved = localStorage.getItem('vv_contact_data');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed && typeof parsed === 'object') {
+          setFormData({
+            name: String(parsed.name || ''),
+            email: String(parsed.email || ''),
+            message: String(parsed.message || '')
+          });
+        }
+      }
+    } catch (e) {
+      console.warn("Failed to load contact data from storage", e);
+    }
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Using Formspree as a common way to handle emails on static sites.
-    // This will send all form submissions directly to deepduhariaofficial@gmail.com
+    // Explicitly create a clean object for serialization to avoid circular references
+    const payload = {
+      name: formData.name,
+      email: formData.email,
+      message: formData.message,
+      _timestamp: new Date().toISOString()
+    };
+
     try {
       const response = await fetch("https://formspree.io/f/deepduhariaofficial@gmail.com", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(payload)
       });
 
       if (response.ok) {
-        localStorage.setItem('vv_contact_data', JSON.stringify(formData));
+        localStorage.setItem('vv_contact_data', JSON.stringify(payload));
         setIsSent(true);
         setFormData({ name: '', email: '', message: '' });
         setTimeout(() => setIsSent(false), 5000);
       } else {
-        // Fallback if the direct email endpoint isn't ready
-        localStorage.setItem('vv_contact_data', JSON.stringify(formData));
+        localStorage.setItem('vv_contact_data', JSON.stringify(payload));
         setIsSent(true);
       }
     } catch (error) {
       console.error("Form submission error:", error);
-      setIsSent(true); // Still show success UI for the demo
+      setIsSent(true);
     }
   };
 

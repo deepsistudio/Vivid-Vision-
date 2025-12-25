@@ -1,6 +1,9 @@
 
-import React, { useState } from 'react';
+import React, { useState, useLayoutEffect, useRef } from 'react';
 import { TranslationSet } from '../types';
+// Import GSAP and Flip plugin
+import { gsap } from 'gsap';
+import { Flip } from 'gsap/Flip';
 
 interface PortfolioProps {
   t: TranslationSet;
@@ -17,12 +20,50 @@ const ITEMS = [
 
 const Portfolio: React.FC<PortfolioProps> = ({ t }) => {
   const [filter, setFilter] = useState<'all' | 'music' | 'commercial' | 'films'>('all');
+  const containerRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
 
   const filteredItems = filter === 'all' ? ITEMS : ITEMS.filter(i => i.category === filter);
 
+  useLayoutEffect(() => {
+    // Reveal grid on scroll
+    const ctx = gsap.context(() => {
+      gsap.from(".portfolio-item", {
+        scrollTrigger: {
+          trigger: gridRef.current,
+          start: "top 85%",
+        },
+        y: 60,
+        opacity: 0,
+        stagger: 0.15,
+        duration: 0.8,
+        ease: "power2.out"
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  // Use Flip for filtering
+  useLayoutEffect(() => {
+    // Flip plugin is used to animate layout changes smoothly
+    const state = Flip.getState(".portfolio-item");
+    
+    // We update the DOM by filtering in React, but Flip needs to know about the change.
+    // Since React state triggers re-render, we run this *after* the render.
+    // In React, this is done by placing the Flip.from in the same effect as state changes.
+    // However, for simplicity and performance in this demo, we use a simple stagger instead of full Flip orchestration 
+    // unless we manage DOM manually. Let's do a smooth opacity shift for filter changes.
+    
+    gsap.fromTo(".portfolio-item", 
+      { opacity: 0, scale: 0.9, y: 20 },
+      { opacity: 1, scale: 1, y: 0, duration: 0.5, stagger: 0.05, ease: "power2.out" }
+    );
+  }, [filter]);
+
   return (
-    <section className="py-20 px-4 max-w-7xl mx-auto">
-      <div className="text-center mb-16">
+    <section ref={containerRef} className="py-20 px-4 max-w-7xl mx-auto">
+      <div className="text-center mb-16 portfolio-header">
         <h2 className="text-4xl md:text-6xl font-black font-syncopate mb-4 uppercase">{t.portfolio.title}</h2>
         <p className="text-slate-400 text-lg">{t.portfolio.subtitle}</p>
       </div>
@@ -43,9 +84,13 @@ const Portfolio: React.FC<PortfolioProps> = ({ t }) => {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {filteredItems.map((item) => (
-          <div key={item.id} className="group relative overflow-hidden rounded-2xl bg-slate-900 shadow-xl transition-transform duration-500 hover:-translate-y-2">
+          <div 
+            key={item.id} 
+            className="portfolio-item group relative overflow-hidden rounded-2xl bg-slate-900 shadow-xl"
+            data-flip-id={item.id}
+          >
             <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
             <img 
               src={item.img} 

@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { Page, Language, Theme } from './types';
 import { TRANSLATIONS } from './constants';
 import Layout from './components/Layout';
@@ -9,6 +9,16 @@ import About from './components/About';
 import GenreGrid from './components/GenreGrid';
 import Contact from './components/Contact';
 import AIEditor from './components/AIEditor';
+
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Flip } from 'gsap/Flip';
+import { Observer } from 'gsap/Observer';
+import { TextPlugin } from 'gsap/TextPlugin';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger, Flip, Observer, TextPlugin);
+}
 
 const BOLLYWOOD_ITEMS = [
   { title: 'Soulful Melody', desc: 'A cinematic romantic journey through the valleys.', img: 'https://picsum.photos/800/600?bollywood-1' },
@@ -27,23 +37,28 @@ const DRILL_ITEMS = [
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<Page>('home');
   const [language, setLanguage] = useState<Language>(() => {
-    return (localStorage.getItem('vv_lang') as Language) || 'en';
+    const saved = localStorage.getItem('vv_lang');
+    return (saved === 'en' || saved === 'pb' || saved === 'hi') ? saved as Language : 'en';
   });
   const [theme, setTheme] = useState<Theme>(() => {
-    return (localStorage.getItem('vv_theme') as Theme) || 
-           (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const saved = localStorage.getItem('vv_theme');
+    if (saved === 'light' || saved === 'dark') return saved as Theme;
+    return (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
   });
 
   useEffect(() => {
-    localStorage.setItem('vv_lang', language);
+    if (typeof language === 'string') {
+      localStorage.setItem('vv_lang', language);
+    }
   }, [language]);
 
   useEffect(() => {
-    localStorage.setItem('vv_theme', theme);
-    document.documentElement.classList.toggle('dark', theme === 'dark');
+    if (typeof theme === 'string') {
+      localStorage.setItem('vv_theme', theme);
+      document.documentElement.classList.toggle('dark', theme === 'dark');
+    }
   }, [theme]);
 
-  // Simple routing based on hash or state
   useEffect(() => {
     const handleHash = () => {
       const hash = window.location.hash.replace('#', '') as Page;
@@ -56,6 +71,14 @@ const App: React.FC = () => {
     return () => window.removeEventListener('hashchange', handleHash);
   }, []);
 
+  useLayoutEffect(() => {
+    gsap.fromTo(".page-content", 
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }
+    );
+    ScrollTrigger.refresh();
+  }, [currentPage]);
+
   const navigateTo = (page: Page) => {
     setCurrentPage(page);
     window.location.hash = page;
@@ -65,38 +88,44 @@ const App: React.FC = () => {
   const t = TRANSLATIONS[language];
 
   const renderPage = () => {
-    switch (currentPage) {
-      case 'home':
-        return (
-          <div className="animate-in fade-in duration-700">
-            <Hero t={t} onCtaClick={() => navigateTo('portfolio')} />
-            <div className="py-20 text-center glass border-y border-white/5">
-              <h3 className="font-syncopate text-2xl mb-4 tracking-widest opacity-50">TRUSTED BY</h3>
-              <div className="flex flex-wrap justify-center gap-12 items-center opacity-30 grayscale hover:grayscale-0 transition-all">
-                <span className="text-3xl font-bold">SONY MUSIC</span>
-                <span className="text-3xl font-bold">NETFLIX</span>
-                <span className="text-3xl font-bold">WARNER BROS</span>
-                <span className="text-3xl font-bold">T-SERIES</span>
-              </div>
-            </div>
-            <About t={t} />
-          </div>
-        );
-      case 'portfolio':
-        return <div className="animate-in fade-in duration-700"><Portfolio t={t} /></div>;
-      case 'bollywood':
-        return <div className="animate-in slide-in-from-bottom duration-700"><GenreGrid title={t.nav.bollywood} items={BOLLYWOOD_ITEMS} /></div>;
-      case 'drill':
-        return <div className="animate-in slide-in-from-bottom duration-700"><GenreGrid title={t.nav.drill} items={DRILL_ITEMS} /></div>;
-      case 'about':
-        return <div className="animate-in fade-in duration-700"><About t={t} /></div>;
-      case 'lab':
-        return <div className="animate-in zoom-in duration-700"><AIEditor t={t} /></div>;
-      case 'contact':
-        return <div className="animate-in fade-in duration-700"><Contact t={t} /></div>;
-      default:
-        return <Hero t={t} onCtaClick={() => navigateTo('portfolio')} />;
-    }
+    return (
+      <div className="page-content">
+        {(() => {
+          switch (currentPage) {
+            case 'home':
+              return (
+                <>
+                  <Hero t={t} onCtaClick={() => navigateTo('portfolio')} />
+                  <div className="py-20 text-center glass border-y border-white/5 clients-bar">
+                    <h3 className="font-syncopate text-2xl mb-4 tracking-widest opacity-50">TRUSTED BY</h3>
+                    <div className="flex flex-wrap justify-center gap-12 items-center opacity-30 grayscale hover:grayscale-0 transition-all">
+                      <span className="text-3xl font-bold">SONY MUSIC</span>
+                      <span className="text-3xl font-bold">NETFLIX</span>
+                      <span className="text-3xl font-bold">WARNER BROS</span>
+                      <span className="text-3xl font-bold">T-SERIES</span>
+                    </div>
+                  </div>
+                  <About t={t} />
+                </>
+              );
+            case 'portfolio':
+              return <Portfolio t={t} />;
+            case 'bollywood':
+              return <GenreGrid title={t.nav.bollywood} items={BOLLYWOOD_ITEMS} />;
+            case 'drill':
+              return <GenreGrid title={t.nav.drill} items={DRILL_ITEMS} />;
+            case 'about':
+              return <About t={t} />;
+            case 'lab':
+              return <AIEditor t={t} />;
+            case 'contact':
+              return <Contact t={t} />;
+            default:
+              return <Hero t={t} onCtaClick={() => navigateTo('portfolio')} />;
+          }
+        })()}
+      </div>
+    );
   };
 
   return (
