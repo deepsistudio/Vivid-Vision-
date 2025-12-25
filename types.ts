@@ -1,7 +1,7 @@
 
 export type Language = 'en' | 'pb' | 'hi';
 export type Theme = 'light' | 'dark';
-export type Page = 'home' | 'portfolio' | 'about' | 'bollywood' | 'drill' | 'contact' | 'lab';
+export type Page = 'home' | 'portfolio' | 'about' | 'bollywood' | 'drill' | 'contact' | 'lab' | 'admin' | 'login';
 
 export interface TranslationSet {
   nav: {
@@ -17,20 +17,24 @@ export interface TranslationSet {
     title: string;
     subtitle: string;
     cta: string;
+    image: string; // Dynamic hero image
   };
   portfolio: {
     title: string;
     subtitle: string;
-    categories: {
-      music: string;
-      commercial: string;
-      films: string;
-    };
+    items: Array<{
+      id: number;
+      title: string;
+      category: string;
+      img: string;
+      size: string;
+    }>;
   };
   about: {
     title: string;
     vision: string;
     mission: string;
+    image: string; // Founder image
     stats: {
       projects: string;
       clients: string;

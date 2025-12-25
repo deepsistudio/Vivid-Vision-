@@ -1,131 +1,132 @@
 
 import { TranslationSet } from './types';
 
+export const DEFAULT_PORTFOLIO = [
+  { id: 1, title: 'Echoes of the North', category: 'Commercial', img: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1925&auto=format&fit=crop', size: 'large' },
+  { id: 2, title: 'Concrete Dreams', category: 'Music Video', img: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=2070&auto=format&fit=crop', size: 'small' },
+  { id: 3, title: 'Lost in Translation', category: 'Short Film', img: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=2059&auto=format&fit=crop', size: 'small' },
+  { id: 4, title: 'Neon Pulse', category: 'Music Video', img: 'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?q=80&w=2070&auto=format&fit=crop', size: 'medium' },
+];
+
 export const TRANSLATIONS: Record<'en' | 'pb' | 'hi', TranslationSet> = {
   en: {
     nav: {
       home: 'Home',
       portfolio: 'Portfolio',
-      about: 'About',
+      about: 'Studio',
       bollywood: 'Bollywood',
       drill: 'Hip-Hop',
       contact: 'Contact',
       lab: 'Creative Lab'
     },
     hero: {
-      title: 'Crafting Visual Legacies',
-      subtitle: 'Premium music videos, commercials, and cinematic storytelling from the heart of the industry.',
-      cta: 'View Our Work'
+      title: 'Vivid Vision Films',
+      subtitle: 'Directed by Vision & Vivid. Premium music videos and cinematic storytelling from Toronto to Mumbai.',
+      cta: 'Explore Showreel',
+      image: 'https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?q=80&w=1974&auto=format&fit=crop'
     },
     portfolio: {
-      title: 'Our Masterpieces',
-      subtitle: 'A selection of our finest visual journeys.',
-      categories: {
-        music: 'Music Videos',
-        commercial: 'Commercials',
-        films: 'Short Films'
-      }
+      title: 'Selected Works',
+      subtitle: 'A curated selection of cinematic legacies.',
+      items: DEFAULT_PORTFOLIO
     },
     about: {
-      title: 'The Vision Behind the Lens',
-      vision: 'To redefine visual excellence through bold storytelling and innovative cinematography.',
-      mission: 'We bring your imagination to life with precision, passion, and premium production standards.',
+      title: 'Vision & Vivid',
+      vision: 'Founded by the creative duo Vision and Vivid, we aim to merge architectural precision with raw cinematic emotion.',
+      mission: 'Our studio is a playground for bold ideas. Vision leads the cinematic aesthetic while Vivid orchestrates the creative narrative.',
+      image: 'https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?q=80&w=1974&auto=format&fit=crop',
       stats: {
-        projects: 'Projects Completed',
-        clients: 'Global Clients',
-        awards: 'Creative Awards'
+        projects: 'Films Directed',
+        clients: 'Global Artists',
+        awards: 'Industry Honors'
       }
     },
     lab: {
-      title: 'AI Creative Lab',
-      description: 'Upload a frame and use AI to transform your vision. Powered by Gemini 2.5 Flash.',
-      placeholder: 'Describe the edit (e.g., "Make it a vintage film look")',
-      edit: 'Transform Frame',
-      upload: 'Upload Image'
+      title: 'The Vision Lab',
+      description: 'Step into the futuristic workspace of Vision. Upload a frame and let AI expand the world.',
+      placeholder: 'Describe your visual evolution...',
+      edit: 'Generate Frame',
+      upload: 'Input Source'
     }
   },
   pb: {
     nav: {
       home: 'ਹੋਮ',
       portfolio: 'ਪੋਰਟਫੋਲੀਓ',
-      about: 'ਬਾਰੇ',
+      about: 'ਸਟੂਡੀਓ',
       bollywood: 'ਬਾਲੀਵੁੱਡ',
       drill: 'ਹਿਪ-ਹੌਪ',
       contact: 'ਸੰਪਰਕ',
       lab: 'ਕ੍ਰਿਏਟਿਵ ਲੈਬ'
     },
     hero: {
-      title: 'ਵਿਜ਼ੂਅਲ ਵਿਰਾਸਤ ਤਿਆਰ ਕਰਨਾ',
-      subtitle: 'ਉਦਯੋਗ ਦੇ ਦਿਲ ਤੋਂ ਪ੍ਰੀਮੀਅਮ ਸੰਗੀਤ ਵੀਡੀਓ, ਇਸ਼ਤਿਹਾਰ ਅਤੇ ਸਿਨੇਮੈਟਿਕ ਕਹਾਣੀ ਸੁਣਾਉਣਾ।',
-      cta: 'ਸਾਡਾ ਕੰਮ ਦੇਖੋ'
+      title: 'ਵਿਵਿਡ ਵਿਜ਼ਨ ਫਿਲਮਜ਼',
+      subtitle: 'ਵਿਜ਼ਨ ਅਤੇ ਵਿਵਿਡ ਦੁਆਰਾ ਨਿਰਦੇਸ਼ਤ। ਟੋਰਾਂਟੋ ਤੋਂ ਮੁੰਬਈ ਤੱਕ ਪ੍ਰੀਮੀਅਮ ਸਿਨੇਮੈਟਿਕ ਕਹਾਣੀ ਸੁਣਾਉਣਾ।',
+      cta: 'ਸ਼ੋਰੀਲ ਦੇਖੋ',
+      image: 'https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?q=80&w=1974&auto=format&fit=crop'
     },
     portfolio: {
-      title: 'ਸਾਡੇ ਮਾਸਟਰਪੀਸ',
-      subtitle: 'ਸਾਡੀ ਸਭ ਤੋਂ ਵਧੀਆ ਵਿਜ਼ੂਅਲ ਯਾਤਰਾਵਾਂ ਦੀ ਚੋਣ।',
-      categories: {
-        music: 'ਸੰਗੀਤ ਵੀਡੀਓ',
-        commercial: 'ਵਪਾਰਕ',
-        films: 'ਲਘੂ ਫਿਲਮਾਂ'
-      }
+      title: 'ਚੋਣਵਾਂ ਕੰਮ',
+      subtitle: 'ਸਿਨੇਮੈਟਿਕ ਵਿਰਾਸਤ ਦੀ ਇੱਕ ਚੋਣ।',
+      items: DEFAULT_PORTFOLIO
     },
     about: {
-      title: 'ਲੈਂਸ ਦੇ ਪਿੱਛੇ ਦੀ ਨਜ਼ਰ',
-      vision: 'ਦਲੇਰ ਕਹਾਣੀ ਸੁਣਾਉਣ ਅਤੇ ਨਵੀਨਤਾਕਾਰੀ ਸਿਨੇਮੈਟੋਗ੍ਰਾਫੀ ਦੁਆਰਾ ਵਿਜ਼ੂਅਲ ਉੱਤਮਤਾ ਨੂੰ ਮੁੜ ਪਰਿਭਾਸ਼ਤ ਕਰਨਾ।',
-      mission: 'ਅਸੀਂ ਤੁਹਾਡੀ ਕਲਪਨਾ ਨੂੰ ਸ਼ੁੱਧਤਾ, ਜਨੂੰਨ ਅਤੇ ਪ੍ਰੀਮੀਅਮ ਉਤਪਾਦਨ ਦੇ ਮਿਆਰਾਂ ਨਾਲ ਜੀਵਨ ਵਿੱਚ ਲਿਆਉਂਦੇ ਹਾਂ।',
+      title: 'ਵਿਜ਼ਨ ਅਤੇ ਵਿਵਿਡ',
+      vision: 'ਰਚਨਾਤਮਕ ਜੋੜੀ ਵਿਜ਼ਨ ਅਤੇ ਵਿਵਿਡ ਦੁਆਰਾ ਸਥਾਪਿਤ, ਸਾਡਾ ਉਦੇਸ਼ ਆਰਕੀਟੈਕਚਰਲ ਸ਼ੁੱਧਤਾ ਨੂੰ ਕੱਚੀ ਸਿਨੇਮੈਟਿਕ ਭਾਵਨਾ ਨਾਲ ਜੋੜਨਾ ਹੈ।',
+      mission: 'ਸਾਡਾ ਸਟੂਡੀਓ ਦਲੇਰ ਵਿਚਾਰਾਂ ਲਈ ਇੱਕ ਖੇਡ ਦਾ ਮੈਦਾਨ ਹੈ। ਵਿਜ਼ਨ ਸਿਨੇਮੈਟਿਕ ਸੁਹਜ ਦੀ ਅਗਵਾਈ ਕਰਦਾ ਹੈ ਜਦੋਂ ਕਿ ਵਿਵਿਡ ਰਚਨਾਤਮਕ ਕਹਾਣੀ ਦਾ ਪ੍ਰਬੰਧ ਕਰਦਾ ਹੈ।',
+      image: 'https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?q=80&w=1974&auto=format&fit=crop',
       stats: {
-        projects: 'ਪ੍ਰੋਜੈਕਟ ਪੂਰੇ ਹੋਏ',
-        clients: 'ਗਲੋਬਲ ਕਲਾਇੰਟਸ',
-        awards: 'ਰਚਨਾਤਮਕ ਪੁਰਸਕਾਰ'
+        projects: 'ਨਿਰਦੇਸ਼ਿਤ ਫਿਲਮਾਂ',
+        clients: 'ਗਲੋਬਲ ਕਲਾਕਾਰ',
+        awards: 'ਉਦਯੋਗ ਸਨਮਾਨ'
       }
     },
     lab: {
-      title: 'AI ਕ੍ਰਿਏਟਿਵ ਲੈਬ',
-      description: 'ਇੱਕ ਫਰੇਮ ਅਪਲੋਡ ਕਰੋ ਅਤੇ ਆਪਣੇ ਦ੍ਰਿਸ਼ਟੀਕੋਣ ਨੂੰ ਬਦਲਣ ਲਈ AI ਦੀ ਵਰਤੋਂ ਕਰੋ।',
-      placeholder: 'ਸੰਪਾਦਨ ਦਾ ਵਰਣਨ ਕਰੋ (ਉਦਾਹਰਨ ਲਈ, "ਇਸਨੂੰ ਵਿੰਟੇਜ ਫਿਲਮ ਦੀ ਦਿੱਖ ਦਿਓ")',
-      edit: 'ਫਰੇਮ ਬਦਲੋ',
-      upload: 'ਚਿੱਤਰ ਅੱਪਲੋਡ ਕਰੋ'
+      title: 'ਵਿਜ਼ਨ ਲੈਬ',
+      description: 'ਵਿਜ਼ਨ ਦੇ ਭਵਿੱਖਮੁਖੀ ਕਾਰਜਸਥਾਨ ਵਿੱਚ ਕਦਮ ਰੱਖੋ। ਇੱਕ ਫਰੇਮ ਅਪਲੋਡ ਕਰੋ ਅਤੇ AI ਨੂੰ ਦੁਨੀਆ ਦਾ ਵਿਸਤਾਰ ਕਰਨ ਦਿਓ।',
+      placeholder: 'ਆਪਣੇ ਵਿਜ਼ੂਅਲ ਵਿਕਾਸ ਦਾ ਵਰਣਨ ਕਰੋ...',
+      edit: 'ਫਰੇਮ ਤਿਆਰ ਕਰੋ',
+      upload: 'ਇਨਪੁਟ ਸਰੋਤ'
     }
   },
   hi: {
     nav: {
       home: 'होम',
       portfolio: 'पोर्टफोलियो',
-      about: 'परिचय',
+      about: 'स्टूडियो',
       bollywood: 'बॉलीवुड',
       drill: 'हिप-हॉप',
       contact: 'संपर्क',
       lab: 'क्रिएटिव लैब'
     },
     hero: {
-      title: 'विजुअल विरासत का निर्माण',
-      subtitle: 'उद्योग के केंद्र से प्रीमियम संगीत वीडियो, विज्ञापन और सिनेमाई कहानी।',
-      cta: 'हमारा काम देखें'
+      title: 'विविड विजन फिल्म्स',
+      subtitle: 'विजन और विविड द्वारा निर्देशित। टोरंटो से मुंबई तक प्रीमियम सिनेमाई कहानी।',
+      cta: 'शोरील देखें',
+      image: 'https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?q=80&w=1974&auto=format&fit=crop'
     },
     portfolio: {
-      title: 'हमारी उत्कृष्ट कृतियाँ',
-      subtitle: 'हमारी बेहतरीन विजुअल यात्राओं का चयन।',
-      categories: {
-        music: 'संगीत वीडियो',
-        commercial: 'विज्ञापन',
-        films: 'लघु फिल्में'
-      }
+      title: 'चुनिंदा कार्य',
+      subtitle: 'सिनेमाई विरासतों का एक चयन।',
+      items: DEFAULT_PORTFOLIO
     },
     about: {
-      title: 'लेंस के पीछे की दृष्टि',
-      vision: 'साहसिक कहानी और अभिनव सिनेमैटोग्राफी के माध्यम से विजुअल उत्कृष्टता को फिर से परिभाषित करना।',
-      mission: 'हम आपकी कल्पना को सटीकता, जुनून और प्रीमियम उत्पादन मानकों के साथ जीवंत करते हैं।',
+      title: 'विजन और विविड',
+      vision: 'रचनात्मक जोड़ी विजन और विविड द्वारा स्थापित, हमारा लक्ष्य वास्तुशिल्प सटीकता को सिनेमाई भावना के साथ मिलाना है।',
+      mission: 'हमारा स्टूडियो साहसिक विचारों के लिए एक खेल का मैदान है। विजन सिनेमाई सौंदर्य का नेतृत्व करते हैं जबकि विविड रचनात्मक कहानी का संचालन करते हैं।',
+      image: 'https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?q=80&w=1974&auto=format&fit=crop',
       stats: {
-        projects: 'पूर्ण परियोजनाएं',
-        clients: 'वैश्विक ग्राहक',
-        awards: 'रचनात्मक पुरस्कार'
+        projects: 'निर्देशित फिल्में',
+        clients: 'वैश्विक कलाकार',
+        awards: 'उद्योग सम्मान'
       }
     },
     lab: {
-      title: 'AI क्रिएटिव लैब',
-      description: 'एक फ्रेम अपलोड करें और अपनी दृष्टि को बदलने के लिए AI का उपयोग करें।',
-      placeholder: 'संपादन का वर्णन करें (जैसे, "इसे विंटेज फिल्म लुक दें")',
-      edit: 'फ्रेम बदलें',
-      upload: 'इमेज अपलोड करें'
+      title: 'विजन लैब',
+      description: 'विजन के भविष्य के कार्यक्षेत्र में कदम रखें। एक फ्रेम अपलोड करें और एआई को दुनिया का विस्तार करने दें।',
+      placeholder: 'अपने दृश्य विकास का वर्णन करें...',
+      edit: 'फ्रेम जेनरेट करें',
+      upload: 'इनपुट स्रोत'
     }
   }
 };

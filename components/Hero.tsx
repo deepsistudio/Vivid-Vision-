@@ -11,83 +11,87 @@ interface HeroProps {
 
 const Hero: React.FC<HeroProps> = ({ t, onCtaClick }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const ctaRef = useRef<HTMLButtonElement>(null);
-
-  const titleWords = t.hero.title.toUpperCase().split(' ');
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
+      const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
 
-      tl.from(".word-span", {
-        y: 100,
-        rotateX: -45,
+      tl.from(".reveal-item", {
+        y: 150,
+        rotateX: -30,
+        opacity: 0,
+        duration: 1.8,
         stagger: 0.1,
-        duration: 1.5,
-        opacity: 0
       })
-      .from(subtitleRef.current, {
-        y: 30,
+      .from(".fade-item", {
         opacity: 0,
-        duration: 1
-      }, "-=1")
-      .from(ctaRef.current, {
-        scale: 0.8,
-        opacity: 0,
-        duration: 0.8,
-        ease: "back.out(1.7)"
-      }, "-=0.5");
+        y: 20,
+        duration: 1.5,
+      }, "-=1.2");
 
-      gsap.to(".hero-bg", {
+      gsap.to(".hero-media", {
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
           end: "bottom top",
           scrub: true
         },
-        y: 100,
-        scale: 1.1
+        scale: 1.15,
+        y: 80
       });
     }, containerRef);
 
     return () => ctx.revert();
-  }, [t.hero.title]);
+  }, [t.hero.image]); // Re-run if image changes
 
   return (
-    <section ref={containerRef} className="relative h-[90vh] flex items-center justify-center overflow-hidden bg-black">
-      <div className="absolute inset-0 opacity-40 hero-bg">
+    <section ref={containerRef} className="relative h-screen flex flex-col items-center justify-center overflow-hidden bg-black">
+      <div className="absolute inset-0 z-0">
         <img 
-          src="https://picsum.photos/1920/1080?grayscale&film" 
-          alt="Cinema background" 
-          className="w-full h-full object-cover"
+          src={t.hero.image} 
+          alt="Vision - Director" 
+          className="hero-media w-full h-full object-cover opacity-60 grayscale transition-all duration-1000"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-[#0a0a0a] z-10" />
       </div>
 
-      <div className="relative z-10 text-center px-4 max-w-4xl">
-        <h1 className="text-5xl md:text-8xl font-black font-syncopate mb-6 leading-tight tracking-tighter flex flex-wrap justify-center gap-x-4">
-          {titleWords.map((word, i) => (
-            <span key={`${word}-${i}`} className="inline-block overflow-hidden">
-              <span className="word-span inline-block">{word}</span>
-            </span>
-          ))}
+      <div className="relative z-20 text-center px-6 max-w-[1400px]">
+        <h1 className="hero-title text-[clamp(2.5rem,10vw,8.5rem)] font-syne font-extrabold uppercase mb-12 flex flex-col items-center tracking-tighter leading-[0.85]">
+          <span className="reveal-container block h-[1.1em]">
+            <span className="reveal-item block">VIVID</span>
+          </span>
+          <span className="reveal-container block h-[1.1em] -mt-[0.1em]">
+            <span className="reveal-item block text-cyan-500">VISION</span>
+          </span>
         </h1>
-        <p ref={subtitleRef} className="text-xl md:text-2xl text-slate-300 mb-10 font-light max-w-2xl mx-auto">
+        
+        <p className="fade-item text-white/40 text-[10px] md:text-xs font-bold tracking-[0.6em] uppercase mb-12 max-w-xl mx-auto leading-loose">
           {t.hero.subtitle}
         </p>
-        <button 
-          ref={ctaRef}
-          onClick={onCtaClick}
-          className="group relative inline-flex items-center justify-center px-10 py-4 font-bold text-white transition-all duration-300 bg-transparent border-2 border-cyan-400 rounded-full hover:bg-cyan-400 hover:text-black"
-        >
-          <span className="relative uppercase tracking-widest">{t.hero.cta}</span>
-          <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
-        </button>
+
+        <div className="fade-item">
+          <button 
+            onClick={onCtaClick}
+            className="group relative px-16 py-6 overflow-hidden rounded-full border border-white/10 transition-all duration-500 hover:border-cyan-400"
+          >
+            <span className="relative z-10 text-[9px] font-bold tracking-[0.4em] uppercase transition-colors group-hover:text-black">
+              Explore Showreel
+            </span>
+            <div className="absolute inset-0 bg-cyan-400 translate-y-full transition-transform duration-500 group-hover:translate-y-0" />
+          </button>
+        </div>
       </div>
 
-      <div className="absolute bottom-10 left-10 w-32 h-32 border-l border-b border-cyan-500/30 rounded-bl-3xl" />
-      <div className="absolute top-10 right-10 w-32 h-32 border-r border-t border-magenta-500/30 rounded-tr-3xl" style={{ borderColor: '#ff006e33' }} />
+      <div className="absolute bottom-12 left-12 hidden lg:block fade-item overflow-hidden">
+        <div className="text-[9px] font-bold tracking-[0.5em] text-white/10 uppercase" style={{ writingMode: 'vertical-rl' }}>
+          VISION & VIVID / DIRECTORS
+        </div>
+      </div>
+
+      <div className="absolute bottom-12 right-12 fade-item flex items-center space-x-6">
+         <span className="text-[8px] font-bold tracking-[0.3em] text-white/20 uppercase">Cinema Mastered</span>
+         <div className="w-12 h-[1px] bg-white/10" />
+      </div>
     </section>
   );
 };
