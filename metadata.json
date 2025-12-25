@@ -1,0 +1,7 @@
+{
+  "name": "Vivid Vision Films & Creative Lab",
+  "description": "A high-end cinematic portfolio for Vivid Vision Films featuring a Gemini 2.5 Flash Image powered AI Creative Lab for real-time film frame editing.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
